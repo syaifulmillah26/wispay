@@ -12,7 +12,7 @@ class Product < ApplicationRecord
 
   after_create_commit do
     ProductJobs::ProductIsActive
-      .set(wait_until: DateTime.now)
+      .set(wait_until: DateTime.now + 3.minutes)
       .perform_later(self)
 
     ProductJobs::BroadcastProduct.perform_later(self)
