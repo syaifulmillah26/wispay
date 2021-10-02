@@ -4,6 +4,7 @@
 class ProductsController < ResourceController
   before_action :set_user, only: :create
   before_action :set_object, only: %i[show update destroy upload_image]
+  before_action :validate_user, only: %i[update destroy]
 
   def index
     @objects = model_class
@@ -16,5 +17,9 @@ class ProductsController < ResourceController
 
   def set_user
     params[:product][:user_id] = current_user.id
+  end
+
+  def validate_user
+    return route_not_found if @object.user_id != current_user.id
   end
 end
