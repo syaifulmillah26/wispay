@@ -1,0 +1,15 @@
+%p
+  Hello #{@object.user.name}!
+%br
+
+%p
+  Nama Produk: #{@object.name}
+%p
+  Harga: #{@object.price}
+%p
+  Kategori: #{@object.category}
+%p
+  Status Aktif: #{@object.is_active}
+
+%p
+  = image_tag(@object.image, size: '100x50') if @object.image.attached?
