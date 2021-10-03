@@ -8,7 +8,7 @@ class Product < ApplicationRecord
   validates :price, presence: true
   validates :category, presence: true
 
-  has_one_attached :image
+  has_one_attached :image, dependent: :destroy
 
   after_create_commit do
     ProductJobs::ProductIsActive

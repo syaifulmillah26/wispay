@@ -10,8 +10,8 @@ class ProductMailerPreview < ActionMailer::Preview
     )
     product = Product.first_or_create(
       user_id: user.id,
-      name: 'testUser',
-      price: 120_000,
+      name: 'Latte',
+      price: 25_000,
       category: 'minuman'
     )
 
