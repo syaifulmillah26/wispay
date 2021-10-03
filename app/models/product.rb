@@ -17,4 +17,12 @@ class Product < ApplicationRecord
 
     ProductJobs::BroadcastProduct.perform_later(self)
   end
+
+  def self.upload_image_file_by_blog(object, image_file)
+    blob = ActiveStorage::Blob.create_after_upload!(
+      io: StringIO.new(Base64.decode64(image_file.file.split(',')[1])),
+      filename: image_file.filename
+    )
+    object.image.attach(blob)
+  end
 end

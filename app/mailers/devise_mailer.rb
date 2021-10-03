@@ -3,7 +3,7 @@
 # This file was sending an email
 class DeviseMailer < Devise::Mailer
   default template_path: 'devise/mailer'
-  default from: 'info@wispay.com'
+  default from: ENV['ACCOUNT_MAIL']
 
   before_action :set_object
 
@@ -13,10 +13,6 @@ class DeviseMailer < Devise::Mailer
 
   def password_change
     mail(to: @object.try(:email), subject: 'Password Changed')
-  end
-
-  def product_informations
-    mail(to: @object.user.try(:email), subject: 'Product Informations')
   end
 
   private

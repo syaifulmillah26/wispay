@@ -11,6 +11,6 @@ module MailHelper
   end
 
   def send_mail_product_information(product)
-    DeviseMailer.with(object: product).product_informations.deliver_later
+    ProductMailer.with(object: product).product_created.deliver_later
   end
 end

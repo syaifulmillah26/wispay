@@ -37,17 +37,5 @@ RSpec.describe DeviseMailer, type: :mailer do
         expect(ActionMailer::Base.deliveries.first.subject).to eq('Reset Password Instructions')
       end
     end
-
-    context 'Product Informations' do
-      it 'should send an email' do
-        DeviseMailer.with(object: product).product_informations.deliver_now
-        expect(ActionMailer::Base.deliveries.count).to eq(1)
-      end
-
-      it 'should set the subject correctly' do
-        DeviseMailer.with(object: product).product_informations.deliver_now
-        expect(ActionMailer::Base.deliveries.first.subject).to eq('Product Informations')
-      end
-    end
   end
 end

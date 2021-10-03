@@ -4,10 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
   include AppHelper
+
   context 'GET API' do
     describe 'return success' do
       it 'get user detail' do
-        get "/api/users/#{user.id}", headers: headers
+        get "/api/users/#{current_user.id}", headers: headers
         expect(response).to have_http_status(200)
         expect(response.body).to_not be_empty
       end
@@ -76,30 +77,6 @@ RSpec.describe 'Users', type: :request do
       it 'user does not exist' do
         delete '/api/users/12', headers: headers
         expect(response).to have_http_status(500)
-      end
-    end
-  end
-
-  context 'Login' do
-    let(:valid_params) { { auth: { email: 'saiful@gmail.com', password: '111111' } } }
-    let(:wrong_email) { { auth: { email: 'saiful2@gmail.com', password: '111111' } } }
-    let(:wrong_password) { { auth: { email: 'saiful2@gmail.com', password: '111111' } } }
-    describe 'validations' do
-      it 'using wrong email should return failed' do
-        user
-        post '/api/auth/signin', params: wrong_email, headers: headers
-        expect(response).to have_http_status(422)
-      end
-
-      it 'using wrong password should return failed' do
-        user
-        post '/api/auth/signin', params: wrong_password, headers: headers
-        expect(response).to have_http_status(422)
-      end
-
-      it 'user successfully login' do
-        post '/api/auth/signin', params: valid_params, headers: headers
-        expect(response).to have_http_status(201)
       end
     end
   end
