@@ -4,7 +4,6 @@ module Account
   # ResetPassword
   class ResetPassword
     include ApplicationHelper
-    include MailHelper
     attr_reader :email, :token, :password
 
     def initialize(email, token, password)
@@ -19,7 +18,7 @@ module Account
 
       @user.update_column(:encrypted_password, hashed_password)
       @user.update_column(:reset_password_token, nil)
-      send_mail_password_changed(@user)
+      send_mail
 
       ok_message(t('wispay.success'))
     end
@@ -32,6 +31,10 @@ module Account
 
     def hashed_password
       BCrypt::Password.create(@password)
+    end
+
+    def send_mail
+      Mailer::SendPasswordChange.perform_async(@user.id)
     end
   end
 end

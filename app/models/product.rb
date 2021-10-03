@@ -11,11 +11,9 @@ class Product < ApplicationRecord
   has_one_attached :image, dependent: :destroy
 
   after_create_commit do
-    ProductJobs::ProductIsActive
-      .set(wait_until: DateTime.now + 3.minutes)
-      .perform_later(self)
-
-    ProductJobs::BroadcastProduct.perform_later(self)
+    # run background job using sidekiq
+    Products::ProductInformation.perform_in(3.minutes, id)
+    Products::Broadcast.perform_async(id)
   end
 
   def self.upload_image_file_by_blog(object, image_file)

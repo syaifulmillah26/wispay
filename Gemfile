@@ -16,6 +16,10 @@ gem 'puma', '~> 5.0'
 gem 'knock'
 # flexible Authentications
 gem 'devise'
+# sidekiq
+gem 'sidekiq'
+# gem sinatra for sidekiq UI
+gem 'sinatra'
 # Shim to load environment variables from .env into ENV in development.
 gem 'dotenv-rails', groups: %i[development test]
 # Rails Internationalization
@@ -58,4 +62,8 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
   gem 'rspec-rails'
+end
+
+group :test do
+  gem 'rspec-sidekiq'
 end

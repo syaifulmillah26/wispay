@@ -55,18 +55,10 @@ Using [Bundler](https://github.com/bundler/bundler)
   Use `bundle info [gemname]` to see where a bundled gem is installed.
   ```
 
-Redis for actionCable purpose
+Redis for actionCable & Sidekiq
 
   ```shell
   brew install redis
-  redis-server
-
-  20430:M 18 Sep 2021 22:46:01.152 # Server initialized
-  20430:M 18 Sep 2021 22:46:01.153 * Loading RDB produced by version 6.0.9
-  20430:M 18 Sep 2021 22:46:01.153 * RDB age 4 seconds
-  20430:M 18 Sep 2021 22:46:01.153 * RDB memory usage when created 1.50 Mb
-  20430:M 18 Sep 2021 22:46:01.157 * DB loaded from disk: 0.005 seconds
-  20430:M 18 Sep 2021 22:46:01.157 * Ready to accept connections
   ```
 
 ### Set environment variables
@@ -127,20 +119,50 @@ Copy env example file and adjust it.
   ```
 
 
+### Run The Sidekiq
+
+  ```shell
+  bundle exec sidekiq -c 1
+
+  2021-10-03T11:09:11.663Z pid=4693 tid=oxiwmixvt INFO: Booted Rails 6.1.4.1 application in development environment
+  2021-10-03T11:09:11.663Z pid=4693 tid=oxiwmixvt INFO: Running in ruby 2.6.5p114 (2019-10-01 revision 67812) [x86_64-darwin20]
+  2021-10-03T11:09:11.663Z pid=4693 tid=oxiwmixvt INFO: See LICENSE and the LGPL-3.0 for licensing details.
+  2021-10-03T11:09:11.663Z pid=4693 tid=oxiwmixvt INFO: Upgrade to Sidekiq Pro for more features and support: https://sidekiq.org
+  2021-10-03T11:09:11.674Z pid=4693 tid=oxiwmixvt INFO: Starting processing, hit Ctrl-C to stop
+  ```
+
+
+### Run Redis Server
+
+  ```shell
+  redis-server
+
+  5718:M 03 Oct 2021 18:13:53.548 # Server initialized
+  5718:M 03 Oct 2021 18:13:53.549 * Loading RDB produced by version 6.0.9
+  5718:M 03 Oct 2021 18:13:53.549 * RDB age 8 seconds
+  5718:M 03 Oct 2021 18:13:53.549 * RDB memory usage when created 1.67 Mb
+  5718:M 03 Oct 2021 18:13:53.553 * DB loaded from disk: 0.004 seconds
+  5718:M 03 Oct 2021 18:13:53.553 * Ready to accept connections
+  ```
+
+
 ### Run Test Driven Development
 
   ```shell
   rake spec
 
-    Forgot Password
-      using existing email should return success
-      using non-existing email should return failed
-    Reset Password
-      using valid email and token should return success
-      using invalid email should return failed
+  Products::Broadcast
+    testing worker
+      Products::Broadcast jobs are enqueued in the default queue
+      occurs at expected time
 
-  Finished in 1.86 seconds (files took 2.41 seconds to load)
-  42 examples, 0 failures
+  Products::ProductInformation
+    testing worker
+      Products::ProductInformation jobs are enqueued in the default queue
+      occurs at expected time
+
+  Finished in 2.03 seconds (files took 2.6 seconds to load)
+  44 examples, 0 failures
   ```
 
 ## Authors
